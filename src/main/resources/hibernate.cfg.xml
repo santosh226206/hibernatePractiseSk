@@ -20,6 +20,10 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Entity Class -->
-<!--        <mapping class="com.yourpackage.entities.YourEntity" />-->
+        <mapping class="org.example.entities.Student" />
+        <mapping class="org.example.onetoonemapping.Question"/>
+        <mapping class="org.example.onetoonemapping.Answer"/>
+        <mapping class="org.example.oneToManymapping.Question"/>
+        <mapping class="org.example.oneToManymapping.Answer"/>
     </session-factory>
 </hibernate-configuration>
