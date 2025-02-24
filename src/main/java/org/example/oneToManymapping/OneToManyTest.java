@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OneToManyTest {
-    public static void main(String[] args) {
+    public static <list> void main(String[] args) {
         SessionFactory sessionFactory= HibernateUtil.getSessionFactory();
         Session session=sessionFactory.openSession();
 //        Question question = new Question();
@@ -30,22 +30,30 @@ public class OneToManyTest {
 //        answers.add(answer2);
 //        answers.add(answer3);
 //        question.setAnswer(answers);
-        Question question = new Question();
-        question.setText("What is Hibernate?");
+        List<Question> temp=new ArrayList<>();
 
-        Answer answer1 = new Answer();
-        answer1.setText("Hibernate is an ORM framework.");
-        answer1.setQuestion(question); // Set the relationship
+        for(int i=0;i<500;i++){
+            Question question = new Question();
+            question.setText("What is Hibernate?");
 
-        Answer answer2 = new Answer();
-        answer2.setText("It simplifies database interactions.");
-        answer2.setQuestion(question); // Set the relationship
-        List<Answer> answers=new ArrayList<>();
-       answers.add(answer1);
-        answers.add(answer2);
-        question.setAnswer(answers);
+            Answer answer1 = new Answer();
+            answer1.setText("Hibernate is an ORM framework.");
+            answer1.setQuestion(question); // Set the relationship
+
+            Answer answer2 = new Answer();
+            answer2.setText("It simplifies database interactions.");
+            answer2.setQuestion(question); // Set the relationship
+            List<Answer> answers=new ArrayList<>();
+            answers.add(answer1);
+            answers.add(answer2);
+            question.setAnswer(answers);
+            temp.add(question);
+        }
         Transaction transaction=session.beginTransaction();
-        session.merge(question);
+        for (Question question : temp) {
+            session.merge(question);
+        }
+        //session.merge(temp);
         //session.merge(answer);
         transaction.commit();
         session.close();
